@@ -1,0 +1,82 @@
+<!-- Make sure gender cant be submitted as gender -->
+<!-- add getEnumValues function to retrieve enum values from table col -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include("./partials/imports.ejs") %>
+    <title>OTDBMS | Students</title>
+  </head>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <h1>Students</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Admin No</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Birthdate</th>
+            <th>Citizenship Status</th>
+            <th>Country of Origin</th>
+            <th>Course</th>
+            <th>Year</th>
+            <th>PEM Group</th>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach((student) => { %>
+          <tr>
+            <td><%= student.adminNo %></td>
+            <td><%= student.name %></td>
+            <td><%= student.gender %></td>
+            <td><%= student.birthday %></td>
+            <td><%= student.citizenshipStatus %></td>
+            <td><%= student.countryOfOrigin %></td>
+            <td><%= student.course %></td>
+            <td><%= student.year %></td>
+            <td><%= student.pemGroup %></td>
+            <td>{TRASH} {EDIT}</td>
+          </tr>
+          <% }) %>
+          <tr>
+            <form action="/students" method="POST">
+              <td>
+                <input
+                  type="text"
+                  name="adminNo"
+                  placeholder="Admin Number"
+                  required
+                />
+              </td>
+              <td>
+                <input type="text" name="name" placeholder="Name" required />
+              </td>
+              <td>
+                <select name="gender" required>
+                  <!-- Test this, make sure gender cant be "Gender" -->
+                  <option value="" disabled selected>Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </td>
+              <td><input type="date" name="birthday" required /></td>
+              <td><input type="text" name="citizenshipStatus" required /></td>
+              <td><input type="text" name="countryOfOrigin" required /></td>
+              <td><input type="text" name="course" required /></td>
+              <td><input type="number" name="year" required /></td>
+              <td><input type="text" name="pemGroup" required /></td>
+              <td>
+                <button type="submit">{ADD}</button>
+              </td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
