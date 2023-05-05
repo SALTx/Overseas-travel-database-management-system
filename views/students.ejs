@@ -40,7 +40,10 @@
             <td><%= student.course %></td>
             <td><%= student.year %></td>
             <td><%= student.pemGroup %></td>
-            <td>{TRASH} {EDIT}</td>
+            <td>
+              <a href="https://google.com"><i class="fa-solid fa-trash"></i></a>
+              <a><i class="fa-solid fa-pen-to-square"></i></a>
+            </td>
           </tr>
           <% }) %>
           <tr>
@@ -71,7 +74,9 @@
               <td><input type="number" name="year" required /></td>
               <td><input type="text" name="pemGroup" required /></td>
               <td>
-                <button type="submit">{ADD}</button>
+                <button type="submit">
+                  <a href=""><i class="fa-solid fa-plus"></i></a>
+                </button>
               </td>
             </form>
           </tr>

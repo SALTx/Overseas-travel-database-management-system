@@ -41,36 +41,44 @@ router.get("/api/students", (req, res) => {
 
 router.post("/students", (req, res) => {
   const data = req.body;
-
-  let adminNo = data.adminNo;
-  let name = data.name;
-  let gender = data.gender;
-  let birthday = data.birthday;
-  let citizenshipStatus = data.citizenshipStatus;
-  let countryOfOrigin = data.countryOfOrigin;
-  let course = data.course;
-  let year = data.year;
-  let pemGroup = data.pemGroup;
-
   let query = "INSERT INTO students VALUES (?,?,?,?,?,?,?,?,?)";
   connection.query(
     query,
     [
-      adminNo,
-      name,
-      gender,
-      birthday,
-      citizenshipStatus,
-      countryOfOrigin,
-      course,
-      year,
-      pemGroup,
+      data.adminNo,
+      data.name,
+      data.gender,
+      data.birthday,
+      data.citizenshipStatus,
+      data.countryOfOrigin,
+      data.course,
+      data.year,
+      data.pemGroup,
     ],
     (err, result) => {
       if (err) throw err;
       res.redirect("/students");
     }
   );
+});
+
+router.delete("/students/:adminNo", (req, res) => {
+  const adminNo = req.params.adminNo;
+  let query = "DELETE FROM students WHERE adminNo = ?";
+  connection.query(query, [adminNo], (err, result) => {
+    if (err) throw err;
+    res.redirect("/students");
+  });
+});
+
+router.put("/students/:adminNo", (req, res) => {
+  const adminNo = req.params.adminNo;
+  const data = req.body;
+  let query = "UPDATE students SET ? WHERE adminNo = ?";
+  connection.query(query, [data, adminNo], (err, result) => {
+    if (err) throw err;
+    res.redirect("/students");
+  });
 });
 
 module.exports = router;
