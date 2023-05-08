@@ -56,10 +56,9 @@ CREATE TABLE
         programID char(6) not null,
         programName varchar(64),
         programType enum (
-            'Internship',
-            'Exchange program',
-            'Immersion program',
-            'Others'
+            'OET',
+            'OITP',
+            'OIMP'
         ),
         startDate date,
         endDate date,
@@ -67,9 +66,8 @@ CREATE TABLE
         city varchar(64),
         organization varchar(64),
         -- change to partnerName, overseasPartner (NULLABLE VAL)
-        organizationType enum ('Company', 'College / University', 'Others'),
+        organizationType enum ('Company', 'Institution', 'Others'),
         -- change col name to overseasPartnerType
-        -- change [1] to institution
         PRIMARY KEY (programID),
         FOREIGN KEY (countryCode) REFERENCES countries (countryCode)
     );
