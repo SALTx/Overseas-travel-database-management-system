@@ -41,8 +41,12 @@
             <td><%= student.year %></td>
             <td><%= student.pemGroup %></td>
             <td>
-              <a href="https://google.com"><i class="fa-solid fa-trash"></i></a>
-              <a><i class="fa-solid fa-pen-to-square"></i></a>
+              <a
+                class="delete-btn"
+                onclick="deleteStudent('<%= student.adminNo %>')"
+                ><i class="fa-solid fa-trash"></i
+              ></a>
+              <a class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></a>
             </td>
           </tr>
           <% }) %>
@@ -83,5 +87,14 @@
         </tbody>
       </table>
     </div>
+    <script>
+      function deleteStudent(adminNo) {
+        console.log(`Deleting student: ${adminNo}`);
+        $.ajax({
+          url: "/students/" + adminNo,
+          type: "DELETE",
+        });
+      }
+    </script>
   </body>
 </html>
