@@ -81,4 +81,14 @@ router.put("/students/:adminNo", (req, res) => {
   });
 });
 
+// programs
+
+router.get("/programs", (req, res) => {
+  let query = "SELECT * FROM programs";
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.render("programs", { programs: result });
+  });
+});
+
 module.exports = router;
