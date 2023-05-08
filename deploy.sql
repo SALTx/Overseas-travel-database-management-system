@@ -42,7 +42,6 @@ CREATE TABLE
         stage tinyint not null,
         pemGroup char(6) not null,
         PRIMARY KEY (adminNo),
-        FOREIGN KEY (countryOfOrigin) REFERENCES countries (countryCode),
         FOREIGN KEY (course) REFERENCES course (courseCode),
         FOREIGN KEY (pemGroup) REFERENCES pemGroup (pemGroup)
     );
@@ -109,10 +108,10 @@ INSERT INTO course (courseCode, courseName, courseManager) VALUES
 ('BIO', 'Biology', 'Alice Johnson');
 
 -- Sample data for students table
-INSERT INTO students (adminNo, name, gender, birthday, citizenshipStatus, countryOfOrigin, course, year, pemGroup) VALUES
-('A123456', 'John Smith', 'Male', '2000-01-01', 'Singapore citizen', 'SGP', 'C75', 1, 'PEM001'),
-('A234567', 'Jane Doe', 'Female', '2001-02-02', 'Permanent resident', 'MYS', 'ENG', 2, 'PEM002'),
-('A345678', 'Bob Johnson', 'Male', '1999-03-03', 'Foreigner', 'USA', 'BIO', 3, 'PEM003');
+INSERT INTO students (adminNo, name, gender, citizenshipStatus, course, stage, pemGroup) VALUES
+('A123456', 'John Smith', 'Male', 'Singapore citizen', 'C75', 1, 'PEM001'),
+('A234567', 'Jane Doe', 'Female', 'Permanent resident', 'ENG', 2, 'PEM002'),
+('A345678', 'Bob Johnson', 'Male', 'Foreigner', 'USA', 3, 'PEM003');
 
 -- Sample data for overseasPrograms table
 INSERT INTO overseasPrograms (programID, programName, programType, startDate, endDate, countryCode, organization, organizationType) VALUES
