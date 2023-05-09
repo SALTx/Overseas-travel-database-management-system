@@ -1,3 +1,4 @@
+const getEnumValues = require("./getenumvalues");
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
@@ -22,12 +23,21 @@ router.get("/", (req, res) => {
   res.render("index");
 });
 
-// Students
 router.get("/students", (req, res) => {
   let query = "SELECT * FROM students";
-  connection.query(query, (err, result) => {
-    if (err) throw err;
-    res.render("students", { students: result });
+  getEnumValues(connection, "students", "citizenshipStatus", (err, values) => {
+    if (err) {
+      throw err;
+    }
+    connection.query(query, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.render("students", {
+        students: result,
+        genders: values,
+      });
+    });
   });
 });
 
@@ -41,18 +51,16 @@ router.get("/api/students", (req, res) => {
 
 router.post("/students", (req, res) => {
   const data = req.body;
-  let query = "INSERT INTO students VALUES (?,?,?,?,?,?,?,?,?)";
+  let query = "INSERT INTO students VALUES (?,?,?,?,?,?,?)";
   connection.query(
     query,
     [
       data.adminNo,
       data.name,
       data.gender,
-      data.birthday,
       data.citizenshipStatus,
-      data.countryOfOrigin,
       data.course,
-      data.year,
+      data.stage,
       data.pemGroup,
     ],
     (err, result) => {
