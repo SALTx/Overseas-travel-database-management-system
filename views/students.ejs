@@ -19,9 +19,7 @@
             <th>Admin No</th>
             <th>Name</th>
             <th>Gender</th>
-            <th>Birthdate</th>
             <th>Citizenship Status</th>
-            <th>Country of Origin</th>
             <th>Course</th>
             <th>Year</th>
             <th>PEM Group</th>
@@ -34,11 +32,9 @@
             <td><%= student.adminNo %></td>
             <td><%= student.name %></td>
             <td><%= student.gender %></td>
-            <td><%= student.birthday %></td>
             <td><%= student.citizenshipStatus %></td>
-            <td><%= student.countryOfOrigin %></td>
             <td><%= student.course %></td>
-            <td><%= student.year %></td>
+            <td><%= student.stage %></td>
             <td><%= student.pemGroup %></td>
             <td>
               <a
@@ -71,11 +67,9 @@
                   <option value="Female">Female</option>
                 </select>
               </td>
-              <td><input type="date" name="birthday" required /></td>
               <td><input type="text" name="citizenshipStatus" required /></td>
-              <td><input type="text" name="countryOfOrigin" required /></td>
               <td><input type="text" name="course" required /></td>
-              <td><input type="number" name="year" required /></td>
+              <td><input type="number" name="stage" required /></td>
               <td><input type="text" name="pemGroup" required /></td>
               <td>
                 <button type="submit">
@@ -95,6 +89,8 @@
           type: "DELETE",
         });
       }
+      genders = "<%- genders %>";
+      console.log(genders);
     </script>
   </body>
 </html>
