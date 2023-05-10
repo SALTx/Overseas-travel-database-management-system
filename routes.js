@@ -25,19 +25,27 @@ router.get("/", (req, res) => {
 
 router.get("/students", (req, res) => {
   let query = "SELECT * FROM students";
-  getEnumValues(connection, "students", "citizenshipStatus", (err, values) => {
+  getEnumValues(connection, "students", "gender", (err, genders) => {
     if (err) {
       throw err;
     }
-    connection.query(query, (err, result) => {
-      if (err) {
-        throw err;
+    getEnumValues(
+      connection,
+      "students",
+      "citizenshipStatus",
+      (err, citizenshipStatuses) => {
+        connection.query(query, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          res.render("students", {
+            students: result,
+            genders: genders,
+            citizenshipStatuses: citizenshipStatuses,
+          });
+        });
       }
-      res.render("students", {
-        students: result,
-        genders: values,
-      });
-    });
+    );
   });
 });
 
@@ -75,7 +83,7 @@ router.delete("/students/:adminNo", (req, res) => {
   let query = "DELETE FROM students WHERE adminNo = ?";
   connection.query(query, [adminNo], (err, result) => {
     if (err) throw err;
-    res.redirect("/students");
+    res.status(200).send("success");
   });
 });
 
