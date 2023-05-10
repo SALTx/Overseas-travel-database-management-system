@@ -1,5 +1,3 @@
-<!-- Make sure gender cant be submitted as gender -->
-<!-- add getEnumValues function to retrieve enum values from table col -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -96,6 +94,7 @@
         </tbody>
       </table>
     </div>
+    <%- include("./partials/footer.ejs") %>
     <script>
       function deleteStudent(adminNo) {
         if (confirm("Are you sure you want to delete this student?")) {
