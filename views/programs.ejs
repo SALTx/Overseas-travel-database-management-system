@@ -1,3 +1,5 @@
+<!-- Make sure programType and organizationType cant be submitted as those values -->
+<!-- add getEnumValues function to retrieve enum values from table col -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,16 +7,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%- include("./partials/imports.ejs") %>
-    <title>OTDBMS | programs</title>
+    <title>OTDBMS | Overseas Programs</title>
   </head>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <h1>Programs</h1>
+    <h1>Overseas Programs</h1>
     <div class="table-responsive">
-      <div class="table table-bordered table-hover">
-        <thead class="thead-light"></thead>
-      </div>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Program ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Country Code</th>
+            <th>City</th>
+            <th>Organization</th>
+            <th>Organization Type</th>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% programs.forEach((program) => { %>
+          <tr>
+            <td><%= program.programID %></td>
+            <td><%= program.programName %></td>
+            <td><%= program.programType %></td>
+            <td><%= program.startDate %></td>
+            <td><%= program.endDate %></td>
+            <td><%= program.countryCode %></td>
+            <td><%= program.city %></td>
+            <td><%= program.organization %></td>
+            <td><%= program.organizationType %></td>
+            <td>
+              <a
+                class="delete-btn"
+                onclick="deleteProgram('<%= program.programID %>')"
+                ><i class="fa-solid fa-trash"></i
+              ></a>
+              <a class="edit-btn" href="/programs/<%- program.programID %>"
+                ><i class="fa-solid fa-pen-to-square"></i
+              ></a>
+            </td>
+          </tr>
+          <% }) %>
+          <tr>
+            <form action="/programs" method="POST">
+              <td>
+                <input
+                  type="text"
+                  name="programID"
+                  placeholder="Program ID"
+                  pattern="[A-Z]{2}[0-9]{4}"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="programName"
+                  placeholder="Name"
+                  required
+                />
+              </td>
+              <td>
+                <select name="programType" required>
+                  <option value="" disabled selected>Type</option>
+                  <% programTypes.forEach((programType) => { %>
+                  <option value="<%-programType%>"><%-programType%></option>
+                  <%})%>
+                </select>
+              </td>
+              <td><input type="date" name="startDate" required /></td>
+              <td>
+                <input type="date" name="endDate" required />
+              </td>
+              <td>
+                <input type="text" name="countryCode" />
+              </td>
+              <td>
+                <input type="text" name="city" placeholder="City" required />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="organization"
+                  placeholder="Organization"
+                  required
+                />
+              </td>
+              <td>
+                <select name="organizationType" required>
+                  <option value="" disabled selected>Organization Type</option>
+                  <% organizationTypes.forEach((organizationType) => { %>
+                  <option value="<%-organizationType%>">
+                    <%-organizationType%>
+                  </option>
+                  <%})%>
+                </select>
+              </td>
+              <td>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <%- include("./partials/footer.ejs") %>
   </body>
 </html>
