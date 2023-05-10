@@ -10,6 +10,21 @@ const connection = mysql.createConnection({
   database: "overseas-travel",
 });
 
+// Get all enum values
+router.get("/enum/:table/:column", (req, res) => {
+  getEnumValues(
+    connection,
+    req.params.table,
+    req.params.column,
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(result);
+    }
+  );
+});
+
 router.get("/js/*", (req, res) => {
   let path = __dirname + "/views/" + req.url;
   res.sendFile(path);
@@ -49,11 +64,25 @@ router.get("/students", (req, res) => {
   });
 });
 
-router.get("/api/students", (req, res) => {
-  let query = "SELECT * FROM students";
-  connection.query(query, (err, result) => {
+router.get("/students/:adminNo", (req, res) => {
+  let query = "SELECT * FROM students WHERE adminNo = ?";
+  let genders, citizenshipStatuses;
+  getEnumValues(connection, "students", "gender", (err, result) => {
     if (err) throw err;
-    res.json(result);
+    genders = result;
+  });
+  getEnumValues(connection, "students", "citizenshipStatus", (err, result) => {
+    if (err) throw err;
+    citizenshipStatuses = result;
+  });
+  connection.query(query, [req.params.adminNo], (err, result) => {
+    if (err) throw err;
+    res.render("edit", {
+      column: "students",
+      student: result[0],
+      genders: genders,
+      citizenshipStatuses: citizenshipStatuses,
+    });
   });
 });
 
@@ -76,6 +105,14 @@ router.post("/students", (req, res) => {
       res.redirect("/students");
     }
   );
+});
+
+router.post("/students/:adminNo", (req, res) => {
+  let query = "Update students SET ? WHERE adminNo = ?";
+  connection.query(query, [req.body, req.params.adminNo], (err, result) => {
+    if (err) throw err;
+    res.redirect("/students");
+  });
 });
 
 router.delete("/students/:adminNo", (req, res) => {

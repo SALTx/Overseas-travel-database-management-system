@@ -42,7 +42,9 @@
                 onclick="deleteStudent('<%= student.adminNo %>')"
                 ><i class="fa-solid fa-trash"></i
               ></a>
-              <a class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a class="edit-btn" href="/students/<%- student.adminNo %>"
+                ><i class="fa-solid fa-pen-to-square"></i
+              ></a>
             </td>
           </tr>
           <% }) %>
@@ -53,6 +55,7 @@
                   type="text"
                   name="adminNo"
                   placeholder="Admin Number"
+                  pattern="[0-9]{6}[A-Z]{1}"
                   required
                 />
               </td>
