@@ -167,4 +167,36 @@ router.get("/programs", (req, res) => {
   });
 });
 
+router.get("/programs/:programId", (req, res) => {
+  let query = "SELECT * FROM overseasprograms WHERE programId = ?";
+  let programTypes, organizationTypes;
+  getEnumValues(
+    connection,
+    "overseasprograms",
+    "programType",
+    (err, result) => {
+      if (err) throw err;
+      programTypes = result;
+    }
+  );
+  getEnumValues(
+    connection,
+    "overseasprograms",
+    "organizationType",
+    (err, result) => {
+      if (err) throw err;
+      organizationTypes = result;
+    }
+  );
+  connection.query(query, [req.params.programId], (err, result) => {
+    if (err) throw err;
+    res.render("edit", {
+      column: "overseasprograms",
+      program: result[0],
+      programTypes: programTypes,
+      organizationTypes: organizationTypes,
+    });
+  });
+});
+
 module.exports = router;

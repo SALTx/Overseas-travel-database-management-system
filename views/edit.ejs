@@ -92,6 +92,108 @@
       </label>
       <button type="submit">Submit</button>
     </form>
+    <%} else if(column == "overseasprograms") {%>
+    <!--  -->
+    <h1>Edit Program</h1>
+    <form action="/programs/<%-program.programID%>">
+      <!--
+            programID (String)
+            programName (String)
+            programType (ENUM)
+            startDate (date)
+            endDate (date)
+            countryCode (String) Pattern: [A-Z]{3}
+            city (String) 
+            organization (String)
+            organizationType (ENUM)
+        -->
+      <label for="programID">
+        Program ID:
+        <input
+          type="text"
+          name="programID"
+          id="programID"
+          placeholder="Program ID"
+          value="<%-program.programID%>"
+        />
+      </label>
+      <label for="programName">
+        Program Name:
+        <input
+          type="text"
+          name="programName"
+          id="programName"
+          placeholder="Program Name"
+          value="<%-program.programName%>"
+        />
+      </label>
+      <label for="programType">
+        <select name="programType" required>
+          <% programTypes.forEach((programType) => { %>
+          <option value="<%-programType%>"><%-programType%></option>
+          <%})%>
+        </select>
+      </label>
+      <label for="startDate">
+        Start Date:
+        <input
+          type="date"
+          name="startDate"
+          id="startDate"
+          placeholder="Start Date"
+          value="<%-program.startDate%>"
+        />
+      </label>
+      <label for="endDate">
+        End Date:
+        <input
+          type="date"
+          name="endDate"
+          id="endDate"
+          placeholder="End Date"
+          value="<%-program.endDate%>"
+        />
+      </label>
+      <label for="countryCode">
+        Country Code:
+        <input
+          type="text"
+          name="countryCode"
+          id="countryCode"
+          placeholder="Country Code"
+          pattern="[A-Z]{3}"
+          value="<%-program.countryCode%>"
+        />
+      </label>
+      <label for="city">
+        City:
+        <input
+          type="text"
+          name="city"
+          id="city"
+          placeholder="City"
+          value="<%-program.city%>"
+        />
+      </label>
+      <label for="organization">
+        Organization:
+        <input
+          type="text"
+          name="organization"
+          id="organization"
+          placeholder="Organization"
+          value="<%-program.organization%>"
+        />
+      </label>
+      <label for="organizationType">
+        <select name="organizationType" required>
+          <% organizationTypes.forEach((organizationType) => { %>
+          <option value="<%-organizationType%>"><%-organizationType%></option>
+          <%})%>
+        </select>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
     <%}%>
   </body>
 </html>
