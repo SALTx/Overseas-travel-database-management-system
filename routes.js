@@ -202,4 +202,12 @@ router.get("/programs/:programId", (req, res) => {
   });
 });
 
+router.get("/records", (req, res) => {
+  let query = "SELECT * FROM trips";
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.render("records", { trips: result });
+  });
+});
+
 module.exports = router;

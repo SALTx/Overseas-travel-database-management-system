@@ -1,0 +1,76 @@
+<!-- Make sure studentAdminNo and programID cant be submitted as empty values -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include("./partials/imports.ejs") %>
+    <title>OTDBMS | Trips</title>
+  </head>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <h1>Trips</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Student Admin No.</th>
+            <th>Program ID</th>
+            <th>Comments</th>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% trips.forEach((trip) => { %>
+          <tr>
+            <td><%= trip.studentAdminNo %></td>
+            <td><%= trip.programID %></td>
+            <td><%= trip.comments %></td>
+            <td>
+              <a
+                class="delete-btn"
+                onclick="deleteTrip('<%= trip.studentAdminNo %>', '<%= trip.programID %>')"
+                ><i class="fa-solid fa-trash"></i
+              ></a>
+              <a
+                class="edit-btn"
+                href="/trips/<%- trip.studentAdminNo %>/<%- trip.programID %>"
+                ><i class="fa-solid fa-pen-to-square"></i
+              ></a>
+            </td>
+          </tr>
+          <% }) %>
+          <tr>
+            <form action="/trips" method="POST">
+              <td>
+                <input
+                  type="text"
+                  name="studentAdminNo"
+                  placeholder="Student Admin No."
+                  pattern="[0-9A-Za-z]{7}"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="programID"
+                  placeholder="Program ID"
+                  pattern="[A-Z]{2}[0-9]{3}"
+                  required
+                />
+              </td>
+              <td>
+                <input type="text" name="comments" placeholder="Comments" />
+              </td>
+              <td>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
