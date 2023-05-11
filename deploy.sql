@@ -30,7 +30,7 @@ CREATE TABLE
     -- Edge case: Common programs which branch out to different courses
 
 CREATE TABLE
-    IF NOT EXISTS students (
+    IF NOT EXISTS `students` (
         adminNo char(7) not null,
         name varchar(64) not null,
         gender enum ('Male', 'Female') not null,
@@ -48,7 +48,7 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    IF NOT EXISTS overseasPrograms (
+    IF NOT EXISTS `overseasPrograms` (
         -- cross reference with overseas program table
         -- OET - Overseas educational trip
         -- OITP - Overseas internship program
@@ -75,7 +75,7 @@ CREATE TABLE
     -- Edge case: Trips that include multiple destinations
 
 CREATE TABLE
-    IF NOT EXISTS trips (
+    IF NOT EXISTS `trips` (
         studentAdminNo char(7) not null,
         programID char(6) not null,
         comments text,
@@ -85,7 +85,7 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    IF NOT EXISTS users (
+    IF NOT EXISTS `users` (
         -- not fully implemented
         username varchar(64) not null,
         password varchar(64),
@@ -122,7 +122,7 @@ INSERT INTO overseasPrograms (programID, programName, programType, startDate, en
 INSERT INTO trips (studentAdminNo, programID, comments) VALUES
 ('A123456', 'OP001', 'Excited to start my summer internship at Google!'),
 ('A234567', 'OP002', 'Looking forward to studying at University of Melbourne'),
-('A345678', 'OP003', 'Can\'t wait to experience Japanese culture!');
+('A345678', 'OP003', 'Can''t wait to experience Japanese culture!');
  
 -- Sample data for users table
 INSERT INTO users (username, password, accountType, name) VALUES
