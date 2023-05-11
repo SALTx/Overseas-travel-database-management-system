@@ -3,14 +3,8 @@ const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "overseas-travel",
-});
+const connection = require("./database");
 
-// Get all enum values
 router.get("/enum/:table/:column", (req, res) => {
   getEnumValues(
     connection,
@@ -35,7 +29,15 @@ router.get("/css/*", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  res.render("index");
+  // get each student and the number of trips theyve been on as seen by how many time their adminNo appears in the trips table
+  let query =
+    "Select name, count(trips.studentAdminNo) as numTrips from students left join trips on students.adminNo = trips.studentAdminNo group by students.adminNo order by numTrips desc limit 10";
+  connection.query(query, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    res.render("index", { topTravelers: result });
+  });
 });
 
 router.get("/students", (req, res) => {
@@ -64,6 +66,7 @@ router.get("/students", (req, res) => {
   });
 });
 
+// Edit students page
 router.get("/students/:adminNo", (req, res) => {
   let query = "SELECT * FROM students WHERE adminNo = ?";
   let genders, citizenshipStatuses;

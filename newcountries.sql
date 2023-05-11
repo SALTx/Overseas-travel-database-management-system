@@ -1,3 +1,4 @@
+use overseas-travel;
 INSERT INTO `countries` (`countryCode`, `countryName`, `aciCountry`) VALUES ('AF', 'Afghanistan', 'no'),
 ('AX', 'Åland Islands', 'no'),
 ('AL', 'Albania', 'no'),
