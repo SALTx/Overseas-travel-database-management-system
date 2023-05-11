@@ -9,6 +9,48 @@
   </head>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <h1>Home</h1>
+    <h1>Homes</h1>
+    <h2>Top travelers</h2>
+    <ul>
+      <%topTravelers.forEach((student) => { %>
+      <li>
+        <p><%-student['name']%></p>
+        <p><%-student['numTrips']%></p>
+      </li>
+      <% console.log(student); %> <%});%>
+    </ul>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+      const topTravelers = <%- JSON.stringify(topTravelers) %>;
+
+      const studentNames = topTravelers.map((student) => student.name);
+      const studentTravelTimes = topTravelers.map((student) => student.numTrips);
+
+
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: studentNames,
+          datasets: [
+            {
+              label: "# of Votes",
+              data: studentTravelTimes,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
   </body>
 </html>
