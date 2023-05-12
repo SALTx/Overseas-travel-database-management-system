@@ -1,0 +1,5 @@
+1. Prioritize import and export of data from loose files
+2. Crud redundancy
+3. refer to email for more details about trip acronyms
+4. Add integration for gsm modules 
+5. Web scraping for nyp course info redundant 
