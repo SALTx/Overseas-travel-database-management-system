@@ -93,6 +93,13 @@
           </tr>
         </tbody>
       </table>
+      <input type="file" id="uploadedFile" />
+
+      <button id="exportToCSV">Export to CSV</button>
+      <button id="importFromCSV" onclick="importFile('CSV')">
+        Import from CSV
+      </button>
+      <button onclick="readFile()" id="readFile">Read file</button>
     </div>
     <%- include("./partials/footer.ejs") %>
     <script>
