@@ -42,69 +42,6 @@ router.get("/", (req, res) => {
 
 // programs
 
-router.get("/programs", (req, res) => {
-  let query = "SELECT * FROM overseasprograms";
-  let programTypes, organizationTypes;
-  getEnumValues(
-    connection,
-    "overseasprograms",
-    "programType",
-    (err, result) => {
-      if (err) throw err;
-      programTypes = result;
-    }
-  );
-  getEnumValues(
-    connection,
-    "overseasprograms",
-    "organizationType",
-    (err, result) => {
-      if (err) throw err;
-      organizationTypes = result;
-    }
-  );
-  connection.query(query, (err, result) => {
-    if (err) throw err;
-    res.render("programs", {
-      programs: result,
-      programTypes: programTypes,
-      organizationTypes: organizationTypes,
-    });
-  });
-});
-
-router.get("/programs/:programId", (req, res) => {
-  let query = "SELECT * FROM overseasprograms WHERE programId = ?";
-  let programTypes, organizationTypes;
-  getEnumValues(
-    connection,
-    "overseasprograms",
-    "programType",
-    (err, result) => {
-      if (err) throw err;
-      programTypes = result;
-    }
-  );
-  getEnumValues(
-    connection,
-    "overseasprograms",
-    "organizationType",
-    (err, result) => {
-      if (err) throw err;
-      organizationTypes = result;
-    }
-  );
-  connection.query(query, [req.params.programId], (err, result) => {
-    if (err) throw err;
-    res.render("edit", {
-      column: "overseasprograms",
-      program: result[0],
-      programTypes: programTypes,
-      organizationTypes: organizationTypes,
-    });
-  });
-});
-
 router.get("/records", (req, res) => {
   let query = "SELECT * FROM trips";
   connection.query(query, (err, result) => {
