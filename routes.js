@@ -5,6 +5,7 @@ const mysql = require("mysql");
 
 const connection = require("./database");
 
+// FOR TESTING ONLY: REMOVE LATER
 router.get("/enum/:table/:column", (req, res) => {
   getEnumValues(
     connection,
@@ -19,6 +20,7 @@ router.get("/enum/:table/:column", (req, res) => {
   );
 });
 
+// Allow access to static js and css files
 router.get("/js/*", (req, res) => {
   let path = __dirname + "/views/" + req.url;
   res.sendFile(path);
@@ -28,25 +30,16 @@ router.get("/css/*", (req, res) => {
   res.sendFile(path);
 });
 
+// Loads up home page
 router.get("/", (req, res) => {
-  // get each student and the number of trips theyve been on as seen by how many time their adminNo appears in the trips table
   let query =
     "Select name, count(trips.studentAdminNo) as numTrips from students left join trips on students.adminNo = trips.studentAdminNo group by students.adminNo order by numTrips desc limit 10";
   connection.query(query, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    res.render("index", { topTravelers: result });
-  });
-});
-
-// programs
-
-router.get("/records", (req, res) => {
-  let query = "SELECT * FROM trips";
-  connection.query(query, (err, result) => {
     if (err) throw err;
-    res.render("records", { trips: result });
+    res.render("index", {
+      title: "Home",
+      topTravelers: result || [],
+    });
   });
 });
 
