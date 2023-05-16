@@ -4,22 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>OTDBMS | Students</title>
     <%- include("./partials/imports.ejs"); %>
   </head>
   <body>
     <%- include("./partials/nav.ejs") %>
     <h1>Homes</h1>
-    <h2>Top travelers</h2>
-    <ul>
-      <%topTravelers.forEach((student) => { %>
-      <li>
-        <p><%-student['name']%></p>
-        <p><%-student['numTrips']%></p>
-      </li>
-      <% console.log(student); %> <%});%>
-    </ul>
-    <div>
+
+    <div
+      class="chart-container"
+      style="position: relative; height: 40vh; width: 80vw"
+    >
       <canvas id="myChart"></canvas>
     </div>
 
@@ -37,7 +32,7 @@
           labels: studentNames,
           datasets: [
             {
-              label: "# of Votes",
+              label: "# of trips",
               data: studentTravelTimes,
               borderWidth: 1,
             },
