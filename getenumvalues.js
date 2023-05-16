@@ -5,7 +5,8 @@ module.exports = function getEnumValues(connection, table, column, callback) {
 
   connection.query(query, (error, results) => {
     if (error) {
-      callback(error);
+      callback(error, null);
+      return;
     } else {
       const values = results[0].COLUMN_TYPE.replace("enum(", "")
         .replace(")", "")
