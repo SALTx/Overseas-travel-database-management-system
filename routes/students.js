@@ -20,6 +20,7 @@ router.get("/", (req, res) => {
             throw err;
           }
           res.render("students", {
+            title: "Students",
             students: result,
             genders: genders,
             citizenshipStatuses: citizenshipStatuses,
