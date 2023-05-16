@@ -38,15 +38,19 @@ CREATE TABLE IF NOT EXISTS students (
 CREATE TABLE IF NOT EXISTS overseasPrograms (
     programID CHAR(6) NOT NULL,
     programName VARCHAR(64) NOT NULL,
-    programType ENUM('OET', 'OITP', 'OIMP') NOT NULL,
+    -- programType ENUM('OET', 'OITP', 'OIMP') NOT NULL,
+    programType ENUM('OSEP', 'OET', 'OIMP', 'OITP', 'Other');
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     countryCode CHAR(3) NOT NULL,
     city VARCHAR(64) NOT NULL,
     organization VARCHAR(64) NOT NULL,
     organizationType ENUM('Company', 'Institution', 'Others') NOT NULL,
+    gsmCode VARCHAR(10),
+    gsmName VARCHAR(64),
     PRIMARY KEY (programID)
 );
+
 
 CREATE TABLE IF NOT EXISTS trips (
     studentAdminNo CHAR(7) NOT NULL,
