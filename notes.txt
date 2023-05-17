@@ -3,3 +3,4 @@
 3. refer to email for more details about trip acronyms
 4. Add integration for gsm modules 
 5. Web scraping for nyp course info redundant 
+6. Look into implementing power bi
