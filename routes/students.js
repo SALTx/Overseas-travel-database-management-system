@@ -3,32 +3,35 @@ const router = express.Router();
 const getEnumValues = require("../getenumvalues");
 
 const connection = require("../database");
+const util = require("util");
+const queryAsync = util.promisify(connection.query).bind(connection);
 
-router.get("/", (req, res) => {
-  let query = "SELECT * FROM students";
-  getEnumValues(connection, "students", "gender", (err, genders) => {
-    if (err) {
-      throw err;
-    }
-    getEnumValues(
+router.get("/", async (req, res) => {
+  try {
+    const gendersPromise = getEnumValues(connection, "students", "gender");
+    const citizenshipStatusesPromise = getEnumValues(
       connection,
       "students",
-      "citizenshipStatus",
-      (err, citizenshipStatuses) => {
-        connection.query(query, (err, result) => {
-          if (err) {
-            throw err;
-          }
-          res.render("students", {
-            title: "Students",
-            students: result,
-            genders: genders,
-            citizenshipStatuses: citizenshipStatuses,
-          });
-        });
-      }
+      "citizenshipStatus"
     );
-  });
+    const query = "SELECT * FROM students";
+
+    const [genders, citizenshipStatuses, result] = await Promise.all([
+      gendersPromise,
+      citizenshipStatusesPromise,
+      queryAsync(query),
+    ]);
+
+    res.render("students", {
+      title: "Students",
+      students: result,
+      genders,
+      citizenshipStatuses,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Edit students page
