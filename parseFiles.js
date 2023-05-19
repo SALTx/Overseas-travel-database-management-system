@@ -2,6 +2,7 @@ const fs = require("fs");
 const XLSX = require("xlsx");
 const xml2js = require("xml2js");
 const mysql = require("mysql");
+const FileReader = require("filereader");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -128,6 +129,45 @@ function parseCSVFile(filePath, requiredHeaders) {
   return map;
 }
 
+function newParseCSVFile(file, requiredHeaders) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      const fileContent = reader.result;
+
+      const lines = fileContent.replace(/\r/g, "").split("\n");
+      const headers = lines[0].split(",");
+
+      for (const header of requiredHeaders) {
+        if (!headers.includes(header)) {
+          reject(new Error(`Required header '${header}' not found.`));
+          return;
+        }
+      }
+
+      const map = lines.slice(1).map((line) => {
+        const values = line.split(",");
+        const obj = {};
+        headers.forEach((header, i) => {
+          if (requiredHeaders.includes(header)) {
+            obj[header] = values[i];
+          }
+        });
+        return obj;
+      });
+
+      resolve(map);
+    };
+
+    reader.onerror = function () {
+      reject(new Error("Error occurred while reading the file."));
+    };
+
+    reader.readAsText(file);
+  });
+}
+
 // IMCOMPLETE
 function generateSQL(data, tableName) {
   const headers = Object.keys(data[0]);
@@ -161,6 +201,7 @@ function generateSQL(data, tableName) {
 module.exports = {
   parse: {
     csv: parseCSVFile,
+    newCSV: newParseCSVFile,
     xls: parseXLSFile,
     xml: parseXMLFile,
     json: parseJSONFile,
