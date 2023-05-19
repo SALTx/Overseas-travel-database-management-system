@@ -1,3 +1,14 @@
+/*
+Students table
+adminNo char(7)
+name varchar(64)
+gender ENUM
+citizenshipStatus ENUM
+course char(3)
+stage smallint
+pemGroup char(6)
+*/
+
 const express = require("express");
 const router = express.Router();
 const getEnumValues = require("../getenumvalues");
