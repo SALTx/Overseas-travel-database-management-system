@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS overseasPrograms (
     organizationType ENUM('Company', 'Institution', 'Others') NOT NULL,
     gsmCode VARCHAR(10),
     gsmName VARCHAR(64),
-    PRIMARY KEY (programID)
+    PRIMARY KEY (programID),
     FOREIGN KEY (countryCode) REFERENCES countries(countryCode)
 );
 
