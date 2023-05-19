@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS students (
 CREATE TABLE IF NOT EXISTS overseasPrograms (
     programID CHAR(6) NOT NULL,
     programName VARCHAR(64) NOT NULL,
-    -- programType ENUM('OET', 'OITP', 'OIMP') NOT NULL,
     programType ENUM('OSEP', 'OET', 'OIMP', 'OITP', 'Other'),
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
@@ -49,6 +48,7 @@ CREATE TABLE IF NOT EXISTS overseasPrograms (
     gsmCode VARCHAR(10),
     gsmName VARCHAR(64),
     PRIMARY KEY (programID)
+    FOREIGN KEY (countryCode) REFERENCES countries(countryCode)
 );
 
 
@@ -79,8 +79,8 @@ SELECT COUNT(DISTINCT studentAdminNo) AS 'Number of unique students who have gon
 FROM trips;
 
 -- 2. Same as 1 except the overseas countries have to be in an ACI country
-CREATE VIEW KPI2 AS
-SELECT COUNT(DISTINCT studentAdminNo) AS 'Number of unique students who have gone for overseas programs in ACI countries'
+CREATE VIEW KPI2 AS 
+SELECT COUNT(DISTINCT studentAdminNo) AS `Number of unique students who have gone to ACI countries`
 FROM trips
 INNER JOIN overseasPrograms ON trips.programID = overseasPrograms.programID
 INNER JOIN countries ON overseasPrograms.countryCode = countries.countryCode
