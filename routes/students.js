@@ -6,15 +6,16 @@ const connection = require("../database");
 const util = require("util");
 const queryAsync = util.promisify(connection.query).bind(connection);
 
+// Students home page
 router.get("/", async (req, res) => {
   try {
+    const query = "SELECT * FROM students";
     const gendersPromise = getEnumValues(connection, "students", "gender");
     const citizenshipStatusesPromise = getEnumValues(
       connection,
       "students",
       "citizenshipStatus"
     );
-    const query = "SELECT * FROM students";
 
     const [genders, citizenshipStatuses, result] = await Promise.all([
       gendersPromise,
@@ -22,7 +23,7 @@ router.get("/", async (req, res) => {
       queryAsync(query),
     ]);
 
-    res.render("students", {
+    res.status(200).render("students", {
       title: "Students",
       students: result,
       genders,
@@ -35,31 +36,31 @@ router.get("/", async (req, res) => {
 });
 
 // Edit students page
-router.get("/:adminNo", (req, res) => {
-  let query = "SELECT * FROM students WHERE adminNo = ?";
-  let genders, citizenshipStatuses;
-  getEnumValues(connection, "students", "gender", (err, result) => {
-    if (err) throw err;
-    genders = result;
-  });
-  getEnumValues(connection, "students", "citizenshipStatus", (err, result) => {
-    if (err) throw err;
-    citizenshipStatuses = result;
-  });
-  connection.query(query, [req.params.adminNo], (err, result) => {
-    if (err) throw err;
-    res.render("edit", {
+router.get("/:adminNo", async (req, res) => {
+  try {
+    const query = "SELECT * FROM students WHERE adminNo = ?";
+    const [genders, citizenshipStatuses, result] = await Promise.all([
+      getEnumValues(connection, "students", "gender"),
+      getEnumValues(connection, "students", "citizenshipStatus"),
+      queryAsync(query, [req.params.adminNo]),
+    ]);
+
+    res.status(200).render("edit", {
       column: "students",
       student: result[0],
-      genders: genders,
-      citizenshipStatuses: citizenshipStatuses,
+      genders,
+      citizenshipStatuses,
     });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
+// Add students into database
 router.post("/", (req, res) => {
   const data = req.body;
-  let query = "INSERT INTO students VALUES (?,?,?,?,?,?,?)";
+  const query = "INSERT INTO students VALUES (?,?,?,?,?,?,?)";
   connection.query(
     query,
     [
@@ -72,36 +73,41 @@ router.post("/", (req, res) => {
       data.pemGroup,
     ],
     (err, result) => {
-      if (err) throw err;
-      res.redirect("");
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+      } else {
+        res.status(200).redirect("/");
+      }
     }
   );
 });
 
+// Update students in database
 router.post("/:adminNo", (req, res) => {
-  let query = "Update students SET ? WHERE adminNo = ?";
-  connection.query(query, [req.body, req.params.adminNo], (err, result) => {
-    if (err) throw err;
-    res.redirect("");
+  const adminNo = req.params.adminNo;
+  const query = "UPDATE students SET ? WHERE adminNo = ?";
+  connection.query(query, [req.body, adminNo], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.status(200).redirect("/");
+    }
   });
 });
 
+// Remove student from database
 router.delete("/:adminNo", (req, res) => {
   const adminNo = req.params.adminNo;
-  let query = "DELETE FROM students WHERE adminNo = ?";
+  const query = "DELETE FROM students WHERE adminNo = ?";
   connection.query(query, [adminNo], (err, result) => {
-    if (err) throw err;
-    res.status(200).send("success");
-  });
-});
-
-router.put("/:adminNo", (req, res) => {
-  const adminNo = req.params.adminNo;
-  const data = req.body;
-  let query = "UPDATE students SET ? WHERE adminNo = ?";
-  connection.query(query, [data, adminNo], (err, result) => {
-    if (err) throw err;
-    res.redirect("");
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.status(200).send("success");
+    }
   });
 });
 
