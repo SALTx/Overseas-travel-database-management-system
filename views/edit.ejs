@@ -6,194 +6,291 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%- include("./partials/imports.ejs") %>
     <title>OTDBMS | Edit <%-column%></title>
+    <style>
+      /* styles.css */
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .error {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .success {
+        color: green;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+    </style>
   </head>
   <body>
-    <% if(column == "students") { %>
-    <h1>Edit Student</h1>
-    <form action="/students/<%-student.adminNo%>" method="POST">
-      <!--
-            adminNo (String) Patthen: [0-9]{6}[A-Z]{1}
-            name    (String)
-            gender  (ENUM)
-            citizenshipStatus (ENUM)
-            course  (String) Pattern: [A-Z]{1}[0-9]{2}
-            stage (INT (1-3))
-            pemGroup (String) Pattern: [A-Z]{3}[0-9]{3}
-
-         -->
-      <label for="adminNo">
-        Admin No:
-        <input
-          type="text"
-          name="adminNo"
-          id="adminNo"
-          placeholder="Admin Number"
-          pattern="[0-9]{6}[A-Z]{1}"
-          value="<%- student.adminNo %>"
-        />
-      </label>
-      <label for="name">
-        Name:
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Name"
-          value="<%- student.name %>"
-        />
-      </label>
-      <label for="gender">
-        <select name="gender" required>
-          <% genders.forEach((gender) => { %>
-          <option value="<%-gender%>"><%-gender%></option>
-          <%})%>
-        </select>
-      </label>
-      <label for="citizenshipStatus">
-        <select name="citizenshipStatus" required>
-          <% citizenshipStatuses.forEach((citizenshipStatus) => { %>
-          <option value="<%-citizenshipStatus%>"><%-citizenshipStatus%></option>
-          <%})%>
-        </select>
-      </label>
-      <label for="course">
-        Course:
-        <input
-          type="text"
-          name="course"
-          id="course"
-          placeholder="Course"
-          pattern="[A-Z]{1}[0-9]{2}"
-          value="<%- student.course %>"
-        />
-      </label>
-      <label for="stage">
-        Stage:
-        <input
-          type="number"
-          name="stage"
-          id="stage"
-          placeholder="Stage"
-          min="1"
-          max="3"
-          value="<%- student.stage %>"
-        />
-      </label>
-      <label for="pemGroup">
-        PEM Group:
-        <input
-          type="text"
-          name="pemGroup"
-          id="pemGroup"
-          placeholder="PEM Group"
-          pattern="[A-Z]{3}[0-9]{3}"
-          value="<%- student.pemGroup %>"
-        />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-    <%} else if(column == "overseasprograms") {%>
-    <!--  -->
-    <h1>Edit Program</h1>
-    <form action="/programs/<%-program.programID%>">
-      <!--
-            programID (String)
-            programName (String)
-            programType (ENUM)
-            startDate (date)
-            endDate (date)
-            countryCode (String) Pattern: [A-Z]{3}
-            city (String) 
-            organization (String)
-            organizationType (ENUM)
-        -->
-      <label for="programID">
-        Program ID:
-        <input
-          type="text"
-          name="programID"
-          id="programID"
-          placeholder="Program ID"
-          value="<%-program.programID%>"
-        />
-      </label>
-      <label for="programName">
-        Program Name:
-        <input
-          type="text"
-          name="programName"
-          id="programName"
-          placeholder="Program Name"
-          value="<%-program.programName%>"
-        />
-      </label>
-      <label for="programType">
-        <select name="programType" required>
-          <% programTypes.forEach((programType) => { %>
-          <option value="<%-programType%>"><%-programType%></option>
-          <%})%>
-        </select>
-      </label>
-      <label for="startDate">
-        Start Date:
-        <input
-          type="date"
-          name="startDate"
-          id="startDate"
-          placeholder="Start Date"
-          value="<%-program.startDate%>"
-        />
-      </label>
-      <label for="endDate">
-        End Date:
-        <input
-          type="date"
-          name="endDate"
-          id="endDate"
-          placeholder="End Date"
-          value="<%-program.endDate%>"
-        />
-      </label>
-      <label for="countryCode">
-        Country Code:
-        <input
-          type="text"
-          name="countryCode"
-          id="countryCode"
-          placeholder="Country Code"
-          pattern="[A-Z]{3}"
-          value="<%-program.countryCode%>"
-        />
-      </label>
-      <label for="city">
-        City:
-        <input
-          type="text"
-          name="city"
-          id="city"
-          placeholder="City"
-          value="<%-program.city%>"
-        />
-      </label>
-      <label for="organization">
-        Organization:
-        <input
-          type="text"
-          name="organization"
-          id="organization"
-          placeholder="Organization"
-          value="<%-program.organization%>"
-        />
-      </label>
-      <label for="organizationType">
-        <select name="organizationType" required>
-          <% organizationTypes.forEach((organizationType) => { %>
-          <option value="<%-organizationType%>"><%-organizationType%></option>
-          <%})%>
-        </select>
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-    <%}%>
+    <%- include("./partials/nav.ejs") %>
+    <% if (column === "students") { %>
+      <h1>Edit Student</h1>
+      <form action="/students/<%- student.adminNo %>" method="POST">
+        <label for="adminNo">
+          Admin No:
+          <input
+            type="text"
+            name="adminNo"
+            id="adminNo"
+            placeholder="Admin Number"
+            pattern="[0-9]{6}[A-Z]{1}"
+            value="<%- student.adminNo %>"
+          />
+        </label>
+        <label for="name">
+          Name:
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+            value="<%- student.name %>"
+          />
+        </label>
+        <label for="gender">
+          Gender:
+          <select name="gender" required>
+            <% genders.forEach((gender) => { %>
+              <option value="<%- gender %>" <%= student.gender === gender ? 'selected' : '' %>><%- gender %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label for="citizenshipStatus">
+          Citizenship Status:
+          <select name="citizenshipStatus" required>
+            <% citizenshipStatuses.forEach((citizenshipStatus) => { %>
+              <option value="<%- citizenshipStatus %>" <%= student.citizenshipStatus === citizenshipStatus ? 'selected' : '' %>><%- citizenshipStatus %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label for="course">
+          Course:
+          <input
+            type="text"
+            name="course"
+            id="course"
+            placeholder="Course"
+            pattern="[A-Z]{1}[0-9]{2}"
+            value="<%- student.course %>"
+          />
+        </label>
+        <label for="stage">
+          Stage:
+          <input
+            type="number"
+            name="stage"
+            id="stage"
+            placeholder="Stage"
+            min="1"
+            max="3"
+            value="<%- student.stage %>"
+          />
+        </label>
+        <label for="pemGroup">
+          PEM Group:
+          <input
+            type="text"
+            name="pemGroup"
+            id="pemGroup"
+            placeholder="PEM Group"
+            pattern="[A-Z]{3}[0-9]{3}"
+            value="<%- student.pemGroup %>"
+          />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    <% } else if (column === "overseasprograms") { %>
+      <h1>Edit Program</h1>
+      <form action="/programs/<%- program.programID %>" method="POST">
+        <label for="programID">
+          Program ID:
+          <input
+            type="text"
+            name="programID"
+            id="programID"
+            placeholder="Program ID"
+            value="<%- program.programID %>"
+          />
+        </label>
+        <label for="programName">
+          Program Name:
+          <input
+            type="text"
+            name="programName"
+            id="programName"
+            placeholder="Program Name"
+            value="<%- program.programName %>"
+          />
+        </label>
+        <label for="programType">
+          Program Type:
+          <select name="programType" required>
+            <% programTypes.forEach((programType) => { %>
+              <option value="<%- programType %>" <%= program.programType === programType ? 'selected' : '' %>><%- programType %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label for="startDate">
+          Start Date:
+          <input
+            type="date"
+            name="startDate"
+            id="startDate"
+            placeholder="Start Date"
+            value="<%- program.startDate %>"
+          />
+        </label>
+        <label for="endDate">
+          End Date:
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            placeholder="End Date"
+            value="<%- program.endDate %>"
+          />
+        </label>
+        <label for="countryCode">
+          Country Code:
+          <input
+            type="text"
+            name="countryCode"
+            id="countryCode"
+            placeholder="Country Code"
+            pattern="[A-Z]{3}"
+            value="<%- program.countryCode %>"
+          />
+        </label>
+        <label for="city">
+          City:
+          <input
+            type="text"
+            name="city"
+            id="city"
+            placeholder="City"
+            value="<%- program.city %>"
+          />
+        </label>
+        <label for="organization">
+          Organization:
+          <input
+            type="text"
+            name="organization"
+            id="organization"
+            placeholder="Organization"
+            value="<%- program.organization %>"
+          />
+        </label>
+        <label for="organizationType">
+          Organization Type:
+          <select name="organizationType" required>
+            <% organizationTypes.forEach((organizationType) => { %>
+              <option value="<%- organizationType %>" <%= program.organizationType === organizationType ? 'selected' : '' %>><%- organizationType %></option>
+            <% }) %>
+          </select>
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    <% } else if (column === "trips") { %>
+      <h1>Edit Trip</h1>
+      <form action="/trips/<%- trip.studentAdminNo %>/<%- trip.programID %>" method="POST">
+        <label for="comments">
+          Comments:
+          <textarea name="comments" id="comments" placeholder="Comments"><%- trip.comments %></textarea>
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    
+    <% } else if (column === "users") { %>
+      <h1>Edit User</h1>
+      <form action="/users/<%- user.username %>" method="POST">
+        <label for="username">
+          Username:
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            value="<%- user.username %>"
+          />
+        </label>
+        <label for="password">
+          Password:
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            value="<%- user.password %>"
+          />
+        </label>
+        <label for="accountType">
+          Account Type:
+          <select name="accountType" required>
+            <option value="Admin" <%= user.accountType === 'Admin' ? 'selected' : '' %>>Admin</option>
+            <option value="Teacher" <%= user.accountType === 'Teacher' ? 'selected' : '' %>>Teacher</option>
+            <option value="Guest" <%= user.accountType === 'Guest' ? 'selected' : '' %>>Guest</option>
+          </select>
+        </label>
+        <label for="name">
+          Name:
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+            value="<%- user.name %>"
+          />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    <% } %>
+    <%- include("./partials/footer.ejs") %>
   </body>
 </html>
