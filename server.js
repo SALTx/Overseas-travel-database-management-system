@@ -1,14 +1,16 @@
+require("dotenv").config();
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const app = express();
+
+// Routes
 const routes = require("./routes");
 const studentRoutes = require("./routes/students");
 const programRoutes = require("./routes/programs");
 const recordsRoutes = require("./routes/records");
-const fileUpload = require("express-fileupload");
-const PORT = 3000;
 
+// Config Server
 app.set("view engine", "ejs");
-
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 
@@ -17,6 +19,10 @@ app.use("/students", studentRoutes);
 app.use("/programs", programRoutes);
 app.use("/records", recordsRoutes);
 
-app.listen(PORT, () => {
+// Serve static files from the "views" directory
+app.use("/js", express.static(__dirname + "/views/js"));
+app.use("/css", express.static(__dirname + "/views/css"));
+
+app.listen(process.env.PORT, () => {
   console.log("Server running on port 3000");
 });

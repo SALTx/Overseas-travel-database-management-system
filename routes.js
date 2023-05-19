@@ -1,11 +1,9 @@
 const getEnumValues = require("./getenumvalues");
 const express = require("express");
 const router = express.Router();
-const mysql = require("mysql");
 
 const connection = require("./database");
 
-// FOR TESTING ONLY: REMOVE LATER
 router.get("/enum/:table/:column", (req, res) => {
   getEnumValues(
     connection,
@@ -18,16 +16,6 @@ router.get("/enum/:table/:column", (req, res) => {
       res.send(result);
     }
   );
-});
-
-// Allow access to static js and css files
-router.get("/js/*", (req, res) => {
-  let path = __dirname + "/views/" + req.url;
-  res.sendFile(path);
-});
-router.get("/css/*", (req, res) => {
-  let path = __dirname + "/views/" + req.url;
-  res.sendFile(path);
 });
 
 // Loads up home page
