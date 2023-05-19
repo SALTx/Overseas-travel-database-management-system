@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS overseasPrograms (
     programID CHAR(6) NOT NULL,
     programName VARCHAR(64) NOT NULL,
     -- programType ENUM('OET', 'OITP', 'OIMP') NOT NULL,
-    programType ENUM('OSEP', 'OET', 'OIMP', 'OITP', 'Other');
+    programType ENUM('OSEP', 'OET', 'OIMP', 'OITP', 'Other'),
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     countryCode CHAR(3) NOT NULL,
@@ -69,6 +69,30 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (username)
 );
 
+-- VIEWS IN ACCORDANCE TO MOE KPI's
+-- (DEFINITION): ACI country refers to a country that is in ASEAN, CHINA, HONG KONG, TAIWAN, or INDIA
+
+-- 1. Count the number of unique students who have gone for overseas programs 
+-- edit: based on enrolment status (?)
+CREATE VIEW KPI1 AS
+SELECT COUNT(DISTINCT studentAdminNo) AS 'Number of unique students who have gone for overseas programs'
+FROM trips;
+
+-- 2. Same as 1 except the overseas countries have to be in an ACI country
+CREATE VIEW KPI2 AS
+SELECT COUNT(DISTINCT studentAdminNo) AS 'Number of unique students who have gone for overseas programs in ACI countries'
+FROM trips
+INNER JOIN overseasPrograms ON trips.programID = overseasPrograms.programID
+INNER JOIN countries ON overseasPrograms.countryCode = countries.countryCode
+WHERE countries.aciCountry = 'Yes';
+
+-- 3. Count the number of unique students who have done OITP in ACI countries
+CREATE VIEW KPI3 AS
+SELECT COUNT(DISTINCT studentAdminNo) AS 'Number of unique students who have done OITP in ACI countries'
+FROM trips
+INNER JOIN overseasPrograms ON trips.programID = overseasPrograms.programID
+INNER JOIN countries ON overseasPrograms.countryCode = countries.countryCode
+WHERE countries.aciCountry = 'Yes' AND overseasPrograms.programType = 'OITP';
 
 -- Sample data for pemGroup table
 INSERT INTO pemGroup (pemGroup, pemName) VALUES
