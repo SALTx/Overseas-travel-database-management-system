@@ -4,3 +4,8 @@
 4. Add integration for gsm modules 
 5. Web scraping for nyp course info redundant 
 6. Look into implementing power bi
+
+18/5
+1. account for common engineering students (*)
+2. Do projections on expected requirements for KPIs being met (approx 2 years)
+3. 
