@@ -94,17 +94,9 @@
         </tbody>
       </table>
       <div>
-        <form
-          action="/functions/import"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <input type="file" name="uploadedFile" id="uploadedFile" required />
-        </form>
-        <button
-          onclick="importCSVFile($('#uploadedFile'), ['adminNo', 'name', 'gender'])"
-        >
-          Import
+        <input type="file" name="uploadedFile" id="uploadedFile" required />
+        <button onclick="importFile($('#uploadedFile'), studentHeaders)">
+          import
         </button>
       </div>
     </div>
