@@ -1,6 +1,6 @@
 [
   {
-    "adminNo": "123456A",
+    "adminNo": "312345A",
     "name": "Jason Uno",
     "gender": "Male",
     "citizenshipStatus": "Singapore citizen",
@@ -9,7 +9,7 @@
     "pemGroup": "MI2003"
   },
   {
-    "adminNo": "123457A",
+    "adminNo": "312346A",
     "name": "Jason Dos",
     "gender": "Male",
     "citizenshipStatus": "Singapore citizen",
@@ -18,7 +18,7 @@
     "pemGroup": "MI2003"
   },
   {
-    "adminNo": "123458A",
+    "adminNo": "312347A",
     "name": "Jason Tres",
     "gender": "Male",
     "citizenshipStatus": "Singapore citizen",

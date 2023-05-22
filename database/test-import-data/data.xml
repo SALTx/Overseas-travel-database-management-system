@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <student-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<record>
-		<adminNo>323456A</adminNo>
+		<adminNo>123456A</adminNo>
 		<name>XML Uno</name>
 		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
@@ -10,7 +10,7 @@
 		<pemGroup>MI2001</pemGroup>
 	</record>
 	<record>
-		<adminNo>323457A</adminNo>
+		<adminNo>123457A</adminNo>
 		<name>XML Dos</name>
 		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
@@ -19,7 +19,7 @@
 		<pemGroup>MI2001</pemGroup>
 	</record>
 	<record>
-		<adminNo>323458A</adminNo>
+		<adminNo>123458A</adminNo>
 		<name>XML Tres</name>
 		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
