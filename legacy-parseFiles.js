@@ -4,12 +4,7 @@ const xml2js = require("xml2js");
 const mysql = require("mysql");
 const FileReader = require("filereader");
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "overseas-travel",
-});
+const connection = require("./database");
 
 function parseJSONFile(filePath, requiredHeaders) {
   const data = fs.readFileSync(filePath, "utf8");

@@ -40,8 +40,6 @@ function importFile(element, requiredHeaders) {
   } else {
     throw new Error("Invalid import filetype provided: " + file.name);
   }
-
-  generateSQLStatement(data);
 }
 
 function importCSVFile(element, requiredHeaders) {
@@ -75,7 +73,7 @@ function importCSVFile(element, requiredHeaders) {
       });
 
       console.log(map);
-      data = map;
+      generateSQLStatement(map);
       resolve(map);
     };
 
@@ -119,7 +117,7 @@ function importXLSXFile(element, requiredHeaders) {
       });
 
       console.log(map);
-      data = map;
+
       resolve(map);
     };
 
@@ -165,7 +163,7 @@ function importXMLFile(element, requiredHeaders) {
       });
 
       console.log(map);
-      data = map;
+
       resolve(map);
     };
 
@@ -212,7 +210,7 @@ function importJSONFile(element, requiredHeaders) {
       });
 
       console.log(map);
-      data = map;
+
       resolve(map);
     };
 

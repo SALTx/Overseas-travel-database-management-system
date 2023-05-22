@@ -1,4 +1,3 @@
-// .env setup
 require("dotenv").config();
 const mysql = require("mysql");
 
