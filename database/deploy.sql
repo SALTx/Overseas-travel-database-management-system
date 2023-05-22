@@ -114,9 +114,9 @@ INSERT INTO students (adminNo, name, gender, citizenshipStatus, course, stage, p
 
 -- Sample data for overseasPrograms table
 INSERT INTO overseasPrograms (programID, programName, programType, startDate, endDate, countryCode, organization, organizationType) VALUES
-('OP001', 'Summer Internship', 'OITP', '2023-06-01', '2023-08-31', 'USA', 'Google', 'Company'),
-('OP002', 'Semester Exchange', 'OITP', '2024-01-01', '2024-05-31', 'AUS', 'University of Melbourne', 'Institution'),
-('OP003', 'Cultural Immersion', 'OITP', '2022-09-01', '2022-12-15', 'JPN', 'Japan Foundation', 'Others');
+('OP001', 'Summer Internship', 'OITP', '2023-06-01', '2023-08-31', 'US', 'Google', 'Company'),
+('OP002', 'Semester Exchange', 'OITP', '2024-01-01', '2024-05-31', 'AU', 'University of Melbourne', 'Institution'),
+('OP003', 'Cultural Immersion', 'OITP', '2022-09-01', '2022-12-15', 'JP', 'Japan Foundation', 'Others');
 
 -- Sample data for trips table
 INSERT INTO trips (studentAdminNo, programID, comments) VALUES
