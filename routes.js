@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const connection = require("./database");
+const util = require("util");
+const queryAsync = util.promisify(connection.query).bind(connection);
 
 router.get("/enum/:table/:column", (req, res) => {
   getEnumValues(
@@ -33,6 +35,19 @@ router.get("/", (req, res) => {
       title: "Home",
       topTravelers: result || [],
     });
+  });
+});
+
+router.get("/universal/:table", async (req, res) => {
+  const table = req.params.table;
+  const query = `select * from ${table}`;
+
+  const data = await queryAsync(query);
+
+  res.render("universal", {
+    title: "Universal test",
+    table: table,
+    data: data,
   });
 });
 
