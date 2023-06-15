@@ -6,6 +6,15 @@ const connection = require("./database");
 const util = require("util");
 const queryAsync = util.promisify(connection.query).bind(connection);
 
+// for all routes, set csp header
+router.use((req, res, next) => {
+  res.set(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'self'"
+  );
+  next();
+});
+
 router.get("/enum/:table/:column", (req, res) => {
   getEnumValues(
     connection,
@@ -50,5 +59,17 @@ router.get("/universal/:table", async (req, res) => {
     data: data,
   });
 });
+
+// route not found, redirect to error page
+// router.get("*", (req, res) => {
+//   const path = req.path;
+//   if (path.includes("/css") || path.includes("/js")) return;
+//   console.log(`[${new Date().toUTCString()}] ${req.path}`);
+//   res.render("error", {
+//     title: "Error",
+//     error: "404",
+//     message: "Page not found",
+//   });
+// });
 
 module.exports = router;
