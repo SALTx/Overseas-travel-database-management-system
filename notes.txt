@@ -1,11 +1,110 @@
-1. Prioritize import and export of data from loose files
-2. Crud redundancy
-3. refer to email for more details about trip acronyms
-4. Add integration for gsm modules 
-5. Web scraping for nyp course info redundant 
-6. Look into implementing power bi
+1. Use CDN for external libraries and download them only as a fallback
+2. Modularize the code. especially the reusable database functions
+3. Decide between creating a table component using ejs or using a library like datatables or creating a universal page
+
+
+
 
 18/5
 1. account for common engineering students (*)
 2. Do projections on expected requirements for KPIs being met (approx 2 years)
-3. 
+1. Prioritize import and export of data from loose files
+6. Look into implementing power bi
+
+
+**The main one**
+Functional yearly update file
+Finish universal page
+clean up the code and dependencies
+Documentation
+    1. User manual
+    2. Technical manual
+    3. Use case diagram
+
+
+
+## 1.0 Use case diagram
+    Actors
+        1. Admin
+        2. Staff
+        3. Guest
+
+    Use cases
+        1. View information from various tables
+            - Students
+            - Trips
+            - OverseasPrograms
+        2. Import information into tables from loose files
+        3. Export information from tables into loose files
+        4. CRUD operations on tables
+        5. Generate reports**
+        6. Change login credentials
+
+
+## 2.0 User manual
+    1. How to install
+    2. How to use
+    3. How to troubleshoot
+    4. How to update
+    5. How to uninstall
+
+
+## 3.0 User acceptance testing
+    1. Functional requirements
+        * Test different roles and ensure proper access permissions
+        * Validate user interactions such as file uploading, data editing, individual entries and downloading of files
+    2. UI requirements
+        * Check that UI is visually appealing and user friendly
+        * Test responsiveness of UI on different devices (mobile, tablet, desktop)
+        * Ensure that all UI elements (buttons, text boxes, etc) are working as intended
+    3. Website interaction requirements
+        * Ensure that all links are working as intended
+        * Ensure that all forms are working as intended
+        * Ensure that all buttons are working as intended
+        * Ensure that all data is being displayed correctly
+    4. Security requirements
+        * Hashing of passwords
+        * Encryption of sensitive data
+        * Ensure that only authorized users can access the system
+    5. Performance requirements //TODO move later
+        * Stress test the system by simulating a large number of users
+        * Ensure that the system is able to handle the load
+        * Ensure that the system is able to handle multiple requests at the same time
+    6. Compatibility requirements
+        * Ensure that the system is compatible with all major browsers (Chrome, Firefox, Safari, Edge)
+        * Ensure that the system is compatible with all major operating systems (Windows, MacOS, Linux)
+        * Ensure that the system is compatible with all major devices (mobile, tablet, desktop)
+    7. User experience requirements
+        * Ensure that the system is easy to use through user testing
+        * Make it easy to receive feedback from users through a feedback form
+    8. Error handling
+        * Test error handling mechanisms such as displaying apropriate error messages
+        * Handle unexpected inputs gracefully
+        * Validate proper logging of errors, exceptions and crashes to facilitate debugging and troubleshooting
+    9. Data integrity
+        * Verify that the data is being properly stored, retrieved and updated
+        * Have backup copies of the data in case of data loss / database downtime
+    10. Documentation and Training
+        * User manual
+        * System Documentation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Questions
+1. How are users going to get their accounts
+    - Users cant register since its only accessible to Staff
+    - Admins have to create the accounts in advance
+    - Accounts can be made in bulk using the import function
+2. How are users going to get their passwords
+    - Passwords are generated in bulk using the import function and changed on first login by User
