@@ -21,8 +21,7 @@ const getEnumValues = async function getEnumValues(connection, table, column) {
     const values = results[0].COLUMN_TYPE.replace("enum(", "")
       .replace(")", "")
       .split(",");
-    const enumValues = values.map((value) => value.replace(/'/g, "").trim());
-    return enumValues;
+    return values.map((value) => value.replace(/'/g, "").trim());
   } catch (error) {
     throw error;
   }
@@ -37,8 +36,7 @@ const getTables = async function getTables(connection) {
 
   try {
     const results = await queryAsync(query);
-    const tables = results.map((result) => result.TABLE_NAME);
-    return tables;
+    return results.map((result) => result.TABLE_NAME);
   } catch (error) {
     throw error;
   }
@@ -53,23 +51,10 @@ const getColumns = async function getColumns(connection, table) {
 
   try {
     const results = await queryAsync(query);
-    const columns = results.map((result) => result.COLUMN_NAME);
-    return columns;
+    return results.map((result) => result.COLUMN_NAME);
   } catch (error) {
     throw error;
   }
 };
 
 module.exports = connection;
-
-/*
-NEW MODULE EXPORTS
-module.exports = {
-  connection,
-  utils: {
-    getEnumValues,
-    getTables,
-    getColumns,
-  }
-}
-*/

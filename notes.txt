@@ -1,6 +1,7 @@
 1. Use CDN for external libraries and download them only as a fallback
 2. Modularize the code. especially the reusable database functions
-3. Decide between creating a table component using ejs or using a library like datatables or creating a universal page
+3. Rewrite the module exports for the database class
+4. Decide between creating a table component using ejs or using a library like datatables or creating a universal page
 
 
 
