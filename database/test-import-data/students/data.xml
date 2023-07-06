@@ -3,28 +3,25 @@
 	<record>
 		<adminNo>123456A</adminNo>
 		<name>XML Uno</name>
-		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
-		<course>C01</course>
-		<stage>1</stage>
-		<pemGroup>MI2001</pemGroup>
+		<studyStage>1</studyStage>
+		<courseCode>EGDF21</courseCode>
+		<pemGroup>IM2000</pemGroup>
 	</record>
 	<record>
 		<adminNo>123457A</adminNo>
 		<name>XML Dos</name>
-		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
-		<course>C01</course>
-		<stage>1</stage>
-		<pemGroup>MI2001</pemGroup>
+		<studyStage>1</studyStage>
+		<courseCode>EGDF21</courseCode>
+		<pemGroup>IM2000</pemGroup>
 	</record>
 	<record>
 		<adminNo>123458A</adminNo>
 		<name>XML Tres</name>
-		<gender>Male</gender>
 		<citizenshipStatus>Singapore citizen</citizenshipStatus>
-		<course>C01</course>
-		<stage>1</stage>
-		<pemGroup>MI2001</pemGroup>
+		<studyStage>1</studyStage>
+		<courseCode>EGDF21</courseCode>
+		<pemGroup>IM2000</pemGroup>
 	</record>
 </student-data>
