@@ -8,6 +8,9 @@ module.exports = async function getEnumValues(connection, table, column) {
 
   try {
     const results = await queryAsync(query);
+    if (results.length === 0) {
+      throw new Error("No results found for query");
+    }
     const values = results[0].COLUMN_TYPE.replace("enum(", "")
       .replace(")", "")
       .split(",");

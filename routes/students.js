@@ -21,15 +21,13 @@ const queryAsync = util.promisify(connection.query).bind(connection);
 router.get("/", async (req, res) => {
   try {
     const query = "SELECT * FROM students";
-    const gendersPromise = getEnumValues(connection, "students", "gender");
     const citizenshipStatusesPromise = getEnumValues(
       connection,
       "students",
       "citizenshipStatus"
     );
 
-    const [genders, citizenshipStatuses, result] = await Promise.all([
-      gendersPromise,
+    const [citizenshipStatuses, result] = await Promise.all([
       citizenshipStatusesPromise,
       queryAsync(query),
     ]);
@@ -37,7 +35,6 @@ router.get("/", async (req, res) => {
     res.status(200).render("students", {
       title: "Students",
       students: result,
-      genders,
       citizenshipStatuses,
     });
   } catch (err) {
@@ -50,8 +47,7 @@ router.get("/", async (req, res) => {
 router.get("/:adminNo", async (req, res) => {
   try {
     const query = "SELECT * FROM students WHERE adminNo = ?";
-    const [genders, citizenshipStatuses, result] = await Promise.all([
-      getEnumValues(connection, "students", "gender"),
+    const [citizenshipStatuses, result] = await Promise.all([
       getEnumValues(connection, "students", "citizenshipStatus"),
       queryAsync(query, [req.params.adminNo]),
     ]);
@@ -59,7 +55,6 @@ router.get("/:adminNo", async (req, res) => {
     res.status(200).render("edit", {
       column: "students",
       student: result[0],
-      genders,
       citizenshipStatuses,
     });
   } catch (err) {
@@ -77,10 +72,9 @@ router.post("/", (req, res) => {
     [
       data.adminNo,
       data.name,
-      data.gender,
       data.citizenshipStatus,
-      data.course,
-      data.stage,
+      data.studyStage,
+      data.courseCode,
       data.pemGroup,
     ],
     (err, result) => {

@@ -16,9 +16,9 @@
           <tr>
             <th>Admin No</th>
             <th>Name</th>
-            <th>Gender</th>
             <th>Citizenship Status</th>
-            <th>Course</th>
+            <th>Study stage</th>
+            <th>Course Code</th>
             <th>PEM Group</th>
             <td>Actions</td>
           </tr>
@@ -28,9 +28,9 @@
           <tr>
             <td><%= student.adminNo %></td>
             <td><%= student.name %></td>
-            <td><%= student.gender %></td>
             <td><%= student.citizenshipStatus %></td>
-            <td><%= student.course %></td>
+            <td><%= student.studySTage %></td>
+            <td><%= student.courseCode %></td>
             <td><%= student.pemGroup %></td>
             <td>
               <a
@@ -59,14 +59,6 @@
                 <input type="text" name="name" placeholder="Name" required />
               </td>
               <td>
-                <select name="gender" required>
-                  <option value="" disabled selected>Gender</option>
-                  <% genders.forEach((gender) => { %>
-                  <option value="<%-gender%>"><%-gender%></option>
-                  <%})%>
-                </select>
-              </td>
-              <td>
                 <select name="citizenshipStatus" required>
                   <option value="" disabled selected>Citizenship Status</option>
                   <% citizenshipStatuses.forEach((citizenshipStatus) => { %>
@@ -76,8 +68,8 @@
                   <%})%>
                 </select>
               </td>
-              <td><input type="text" name="course" required /></td>
-              <td><input type="number" name="stage" required /></td>
+              <td><input type="text" name="studySTage" required /></td>
+              <td><input type="text" name="courseCode" required /></td>
               <td><input type="text" name="pemGroup" required /></td>
               <td>
                 <button type="submit">
