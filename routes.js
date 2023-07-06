@@ -32,7 +32,7 @@ router.get("/enum/:table/:column", (req, res) => {
 // Loads up home page
 router.get("/", (req, res) => {
   let query =
-    "Select name, count(trips.studentAdminNo) as numTrips from students left join trips on students.adminNo = trips.studentAdminNo group by students.adminNo order by numTrips desc limit 10";
+    "Select `Student Name`, count(trips.`Student Admin`) as numTrips from students left join trips on students.`Admin Number` = trips.`Student Admin` group by students.`Admin Number` order by numTrips desc limit 10";
 
   let kpi1query = "select * from kpi1";
   let kpi2query = "select * from kpi2";

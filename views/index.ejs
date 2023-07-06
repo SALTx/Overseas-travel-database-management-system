@@ -23,7 +23,7 @@
       const ctx = document.getElementById("myChart");
       const topTravelers = <%- JSON.stringify(topTravelers) %>;
 
-      const studentNames = topTravelers.map((student) => student.name);
+      const studentNames = topTravelers.map((student) => student['Student Name']);
       const studentTravelTimes = topTravelers.map((student) => student.numTrips);
 
 
