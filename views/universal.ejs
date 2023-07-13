@@ -5,9 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Universal test</title>
+    <style>
+      .table-container {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    </style>
+    <script>
+      function scrollTable(direction) {
+        const tableContainer = document.getElementById("tableContainer");
+        const scrollDistance = 300; // Adjust this value to change scroll distance
+
+        if (direction === "left") {
+          tableContainer.scrollBy(-scrollDistance, 0);
+        } else if (direction === "right") {
+          tableContainer.scrollBy(scrollDistance, 0);
+        }
+      }
+    </script>
   </head>
   <body>
-    <div class="table-responsive">
+    <div class="table-container" id="tableContainer">
       <table class="table table-bordered table-hover">
         <thead class="thead-light">
           <tr>
@@ -17,15 +35,18 @@
           </tr>
         </thead>
         <tbody>
-          <% data.forEach((row) => { %>
+          <% data.forEach((row, index) => { %> <% if (index >= 10 && index <=
+          19) { %>
           <tr>
             <% Object.values(row).forEach((value) => { %>
             <td><%= value %></td>
             <% }); %>
           </tr>
-          <% }); %>
+          <% } %> <% }); %>
         </tbody>
       </table>
     </div>
+    <button onclick="scrollTable('left')">Scroll Left</button>
+    <button onclick="scrollTable('right')">Scroll Right</button>
   </body>
 </html>
