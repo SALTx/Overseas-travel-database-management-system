@@ -20,15 +20,10 @@
       }
     </style>
     <script>
-      function scrollTable(direction) {
-        const tableContainer = document.getElementById("tableContainer");
-        const scrollDistance = 300; // Adjust this value to change scroll distance
-
-        if (direction === "left") {
-          tableContainer.scrollBy(-scrollDistance, 0);
-        } else if (direction === "right") {
-          tableContainer.scrollBy(scrollDistance, 0);
-        }
+      function handleTableSelection() {
+        const tableSelect = document.getElementById("table-select");
+        const selectedTable = tableSelect.value;
+        window.location.href = `/universal/${selectedTable}`;
       }
 
       function toggleColumn(index) {
@@ -44,6 +39,17 @@
             cells[i].style.display =
               cells[i].style.display === "none" ? "table-cell" : "none";
           }
+        }
+      }
+
+      function scrollTable(direction) {
+        const tableContainer = document.getElementById("tableContainer");
+        const scrollDistance = 300; // Adjust this value to change scroll distance
+
+        if (direction === "left") {
+          tableContainer.scrollBy(-scrollDistance, 0);
+        } else if (direction === "right") {
+          tableContainer.scrollBy(scrollDistance, 0);
         }
       }
 
@@ -84,62 +90,56 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <!-- header to display the table name that is shown on the table -->
           <h1><%= table %></h1>
-          <!-- if the table name contains 'kpi' ignoring the capitalization then display the description column as description: {{data.courseName where courseName == "Description"}} -->
-          <% if (table.toLowerCase().includes("kpi")) { %> <% const description
-          = data[data.length - 1]['Number of Students']; %>
-          <h3>Description: <%= description %></h3>
-          <% console.log(description); %> <% } %>
+          <% if (table.toLowerCase().includes("kpi")) { %>
+            <% const description = data[data.length - 1]['Number of Students']; %>
+            <h3>Description: <%= description %></h3>
+            <% console.log(description); %>
+          <% } %>
           <div class="table-container" id="tableContainer">
             <table class="table table-bordered table-hover" id="dataTable">
               <thead class="thead-light">
                 <tr>
                   <% Object.keys(data[0]).forEach((key, index) => { %>
-                  <th id="header_<%= index %>"><%= key %></th>
-                  <script>
-                    function toggleColumn_<%= index %>() {
-                      toggleColumn(<%= index %>);
-                    }
-                  </script>
+                    <th id="header_<%= index %>"><%= key %></th>
+                    <script>
+                      function toggleColumn_<%= index %>() {
+                        toggleColumn(<%= index %>);
+                      }
+                    </script>
                   <% }); %>
                 </tr>
               </thead>
               <tbody>
-                <% const pageSize = 10; const pageCount = Math.ceil(data.length
-                / pageSize); for (let i = 0; i < pageCount; i++) { %> <% const
-                startIndex = i * pageSize; const endIndex = startIndex +
-                pageSize; const pageData = data.slice(startIndex, endIndex); %>
-                <% pageData.forEach((row) => { %>
-                <tr>
-                  <% Object.values(row).forEach((value) => { %>
-                  <td><%= value %></td>
+                <% const pageSize = 10; const pageCount = Math.ceil(data.length / pageSize); for (let i = 0; i < pageCount; i++) { %>
+                  <% const startIndex = i * pageSize; const endIndex = startIndex + pageSize; const pageData = data.slice(startIndex, endIndex); %>
+                  <% pageData.forEach((row) => { %>
+                    <tr>
+                      <% Object.values(row).forEach((value) => { %>
+                        <td><%= value %></td>
+                      <% }); %>
+                    </tr>
                   <% }); %>
-                </tr>
-                <% }); %> <% } %>
+                <% } %>
               </tbody>
             </table>
           </div>
-          <button class="btn btn-primary" onclick="scrollTable('left')">
-            Scroll Left
-          </button>
-          <button class="btn btn-primary" onclick="scrollTable('right')">
-            Scroll Right
-          </button>
+          <button class="btn btn-primary" onclick="scrollTable('left')">Scroll Left</button>
+          <button class="btn btn-primary" onclick="scrollTable('right')">Scroll Right</button>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <h3>Show/Hide Columns:</h3>
           <% Object.keys(data[0]).forEach((key, index) => { %>
-          <label class="checkbox-inline">
-            <input
-              type="checkbox"
-              onclick="toggleColumn_<%= index %>()"
-              checked
-            />
-            <%= key %>
-          </label>
+            <label class="checkbox-inline">
+              <input
+                type="checkbox"
+                onclick="toggleColumn_<%= index %>()"
+                checked
+              />
+              <%= key %>
+            </label>
           <% }); %>
         </div>
       </div>
@@ -167,33 +167,35 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-6">
+              <h2>Sort and Filter</h2>
               <label for="sort-by">Sort by:</label>
               <select id="sort-by" class="form-control" onchange="sortTable()">
                 <% Object.keys(data[0]).forEach((key) => { %>
-                <option value="<%= key %>"><%= key %></option>
+                  <option value="<%= key %>"><%= key %></option>
                 <% }); %>
               </select>
             </div>
             <% if (table === "table") { %>
-            <div class="col-md-6">
-              <label class="checkbox-inline">
-                <input
-                  type="checkbox"
-                  id="study-stage-filter"
-                  onclick="filterTable()"
-                />
-                Filter by study stage:
-              </label>
-              <select
-                id="study-stage-value"
-                class="form-control"
-                onchange="filterTable()"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-            </div>
+              <div class="col-md-6">
+                <h2>Filter</h2>
+                <label class="checkbox-inline">
+                  <input
+                    type="checkbox"
+                    id="study-stage-filter"
+                    onclick="filterTable()"
+                  />
+                  Filter by study stage:
+                </label>
+                <select
+                  id="study-stage-value"
+                  class="form-control"
+                  onchange="filterTable()"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
             <% } %>
           </div>
           <div class="row">
@@ -202,6 +204,16 @@
               <input type="text" id="search" class="form-control" />
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Table Selection:</h3>
+          <select id="table-select" class="form-control" onchange="handleTableSelection()">
+            <% tables.forEach((table) => { %>
+              <option value="<%= table %>"><%= table %></option>
+            <% }); %>
+          </select>
         </div>
       </div>
     </div>

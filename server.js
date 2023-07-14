@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.static("public"));
-
+//test
 app.use("/", routes);
 app.use("/students", studentRoutes);
 app.use("/programs", programRoutes);
