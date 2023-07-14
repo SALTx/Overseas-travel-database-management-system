@@ -109,3 +109,12 @@ Documentation
     - Accounts can be made in bulk using the import function
 2. How are users going to get their passwords
     - Passwords are generated in bulk using the import function and changed on first login by User
+
+
+- finish up on css stylings
+- increase table size to display more data.
+- finish implementation of chart display using chart.js
+- for kpi 2 round values to nearest int
+- for the main page display the 3 charts to represent the kpi
+    - allow the level of specificity to be controlled by the user depending on rile
+- UAT and final presentation on friday 

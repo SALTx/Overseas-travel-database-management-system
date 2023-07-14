@@ -5,10 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Universal test</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <style>
       .table-container {
-        overflow-x: auto;
-        white-space: nowrap;
+        height: 200px;
+        overflow: auto;
+      }
+      table,
+      tr,
+      td,
+      th {
+        border: 1px solid black;
+        text-align: center;
       }
     </style>
     <script>
@@ -22,31 +30,183 @@
           tableContainer.scrollBy(scrollDistance, 0);
         }
       }
+
+      function toggleColumn(index) {
+        const table = document.getElementById("dataTable");
+        const header = document.getElementById(`header_${index}`);
+        const cells = table.getElementsByTagName("td");
+
+        header.style.display =
+          header.style.display === "none" ? "table-cell" : "none";
+
+        for (let i = 0; i < cells.length; i++) {
+          if (i % table.rows[0].cells.length === index) {
+            cells[i].style.display =
+              cells[i].style.display === "none" ? "table-cell" : "none";
+          }
+        }
+      }
+
+      function sortTable() {
+        const table = document.getElementById("dataTable");
+        const sortIndex = document.getElementById("sort-by").selectedIndex;
+        const rows = Array.from(table.rows).slice(1); // Exclude header row
+        rows.sort((a, b) => {
+          const aValue = a.cells[sortIndex].textContent;
+          const bValue = b.cells[sortIndex].textContent;
+          return aValue.localeCompare(bValue);
+        });
+        table.tBodies[0].append(...rows);
+      }
+
+      function filterTable() {
+        const table = document.getElementById("dataTable");
+        const rows = Array.from(table.rows).slice(1); // Exclude header row
+        const studyStageFilter = document.getElementById("study-stage-filter");
+        if (studyStageFilter.checked) {
+          const studyStageValue =
+            document.getElementById("study-stage-value").value;
+          rows.forEach((row) => {
+            const studyStageCell = row.cells[2]; // Assuming studyStage is in the third column
+            if (studyStageCell.textContent !== studyStageValue) {
+              row.style.display = "none";
+            }
+          });
+        } else {
+          rows.forEach((row) => {
+            row.style.display = "";
+          });
+        }
+      }
     </script>
   </head>
   <body>
-    <div class="table-container" id="tableContainer">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-light">
-          <tr>
-            <% Object.keys(data[0]).forEach((key) => { %>
-            <th><%= key %></th>
-            <% }); %>
-          </tr>
-        </thead>
-        <tbody>
-          <% data.forEach((row, index) => { %> <% if (index >= 10 && index <=
-          19) { %>
-          <tr>
-            <% Object.values(row).forEach((value) => { %>
-            <td><%= value %></td>
-            <% }); %>
-          </tr>
-          <% } %> <% }); %>
-        </tbody>
-      </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- header to display the table name that is shown on the table -->
+          <h1><%= table %></h1>
+          <!-- if the table name contains 'kpi' ignoring the capitalization then display the description column as description: {{data.courseName where courseName == "Description"}} -->
+          <% if (table.toLowerCase().includes("kpi")) { %> <% const description
+          = data[data.length - 1]['Number of Students']; %>
+          <h3>Description: <%= description %></h3>
+          <% console.log(description); %> <% } %>
+          <div class="table-container" id="tableContainer">
+            <table class="table table-bordered table-hover" id="dataTable">
+              <thead class="thead-light">
+                <tr>
+                  <% Object.keys(data[0]).forEach((key, index) => { %>
+                  <th id="header_<%= index %>"><%= key %></th>
+                  <script>
+                    function toggleColumn_<%= index %>() {
+                      toggleColumn(<%= index %>);
+                    }
+                  </script>
+                  <% }); %>
+                </tr>
+              </thead>
+              <tbody>
+                <% const pageSize = 10; const pageCount = Math.ceil(data.length
+                / pageSize); for (let i = 0; i < pageCount; i++) { %> <% const
+                startIndex = i * pageSize; const endIndex = startIndex +
+                pageSize; const pageData = data.slice(startIndex, endIndex); %>
+                <% pageData.forEach((row) => { %>
+                <tr>
+                  <% Object.values(row).forEach((value) => { %>
+                  <td><%= value %></td>
+                  <% }); %>
+                </tr>
+                <% }); %> <% } %>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-primary" onclick="scrollTable('left')">
+            Scroll Left
+          </button>
+          <button class="btn btn-primary" onclick="scrollTable('right')">
+            Scroll Right
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Show/Hide Columns:</h3>
+          <% Object.keys(data[0]).forEach((key, index) => { %>
+          <label class="checkbox-inline">
+            <input
+              type="checkbox"
+              onclick="toggleColumn_<%= index %>()"
+              checked
+            />
+            <%= key %>
+          </label>
+          <% }); %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Import</h2>
+              <button class="btn btn-primary">CSV</button>
+              <button class="btn btn-primary">JSON</button>
+              <button class="btn btn-primary">XLSX</button>
+              <button class="btn btn-primary">XML</button>
+            </div>
+            <div class="col-md-6">
+              <h2>Export</h2>
+              <button class="btn btn-primary">CSV</button>
+              <button class="btn btn-primary">JSON</button>
+              <button class="btn btn-primary">XLSX</button>
+              <button class="btn btn-primary">XML</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="sort-by">Sort by:</label>
+              <select id="sort-by" class="form-control" onchange="sortTable()">
+                <% Object.keys(data[0]).forEach((key) => { %>
+                <option value="<%= key %>"><%= key %></option>
+                <% }); %>
+              </select>
+            </div>
+            <% if (table === "table") { %>
+            <div class="col-md-6">
+              <label class="checkbox-inline">
+                <input
+                  type="checkbox"
+                  id="study-stage-filter"
+                  onclick="filterTable()"
+                />
+                Filter by study stage:
+              </label>
+              <select
+                id="study-stage-value"
+                class="form-control"
+                onchange="filterTable()"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <% } %>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="search">Search:</label>
+              <input type="text" id="search" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button onclick="scrollTable('left')">Scroll Left</button>
-    <button onclick="scrollTable('right')">Scroll Right</button>
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/popper.min.js"></script>
   </body>
 </html>

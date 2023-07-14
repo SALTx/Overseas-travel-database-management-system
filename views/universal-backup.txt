@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universal test</title>
+    <style>
+      .table-container {
+        height: 200px;
+        overflow: auto;
+      }
+    </style>
+    <script>
+      function scrollTable(direction) {
+        const tableContainer = document.getElementById("tableContainer");
+        const scrollDistance = 300; // Adjust this value to change scroll distance
+
+        if (direction === "left") {
+          tableContainer.scrollBy(-scrollDistance, 0);
+        } else if (direction === "right") {
+          tableContainer.scrollBy(scrollDistance, 0);
+        }
+      }
+
+      function toggleColumn(index) {
+        const table = document.getElementById("dataTable");
+        const header = document.getElementById(`header_${index}`);
+        const cells = table.getElementsByTagName("td");
+
+        header.style.display =
+          header.style.display === "none" ? "table-cell" : "none";
+
+        for (let i = 0; i < cells.length; i++) {
+          if (i % table.rows[0].cells.length === index) {
+            cells[i].style.display =
+              cells[i].style.display === "none" ? "table-cell" : "none";
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="table-container" id="tableContainer">
+      <table class="table table-bordered table-hover" id="dataTable">
+        <thead class="thead-light">
+          <tr>
+            <% Object.keys(data[0]).forEach((key, index) => { %>
+            <th id="header_<%= index %>"><%= key %></th>
+            <script>
+              function toggleColumn_<%= index %>() {
+                toggleColumn(<%= index %>);
+              }
+            </script>
+            <% }); %>
+          </tr>
+        </thead>
+        <tbody>
+          <% const pageSize = 10; const pageCount = Math.ceil(data.length /
+          pageSize); for (let i = 0; i < pageCount; i++) { %> <% const
+          startIndex = i * pageSize; const endIndex = startIndex + pageSize;
+          const pageData = data.slice(startIndex, endIndex); %> <%
+          pageData.forEach((row) => { %>
+          <tr>
+            <% Object.values(row).forEach((value) => { %>
+            <td><%= value %></td>
+            <% }); %>
+          </tr>
+          <% }); %> <% } %>
+        </tbody>
+      </table>
+    </div>
+    <button onclick="scrollTable('left')">Scroll Left</button>
+    <button onclick="scrollTable('right')">Scroll Right</button>
+
+    <h3>Show/Hide Columns:</h3>
+    <% Object.keys(data[0]).forEach((key, index) => { %>
+    <label>
+      <input type="checkbox" onclick="toggleColumn_<%= index %>()" checked />
+      <%= key %>
+    </label>
+    <br />
+    <% }); %>
+  </body>
+</html>
