@@ -47,18 +47,52 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/universal", async (req, res) => {
+  const tables = await getTablesFromDatabase();
+
+  res.render("universal", {
+    title: "Universal test",
+    tables: tables,
+  });
+});
+
 router.get("/universal/:table", async (req, res) => {
   const table = req.params.table;
   const query = `select * from ${table}`;
 
   const data = await queryAsync(query);
+  const tables = await getTablesFromDatabase();
 
   res.render("universal", {
     title: "Universal test",
     table: table,
     data: data,
+    tables: tables,
   });
 });
+
+async function getTablesFromDatabase() {
+  const query = "SHOW TABLES";
+  const results = await queryAsync(query);
+
+  const tables = results.map((row) => Object.values(row)[0]);
+  return tables;
+}
+router.get("/universal/kpi1", async (req, res) => {
+  const table = "kpi1";
+  const query = `SELECT * FROM ${table}`;
+  const data = await queryAsync(query);
+  const tables = await getTablesFromDatabase();
+
+  res.render("universal", {
+    title: "Universal test",
+    table: table,
+    data: data,
+    tables: tables,
+  });
+});
+
+
 
 // route not found, redirect to error page
 // router.get("*", (req, res) => {
