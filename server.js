@@ -25,5 +25,5 @@ app.use("/js", express.static(__dirname + "/views/js"));
 app.use("/css", express.static(__dirname + "/views/css"));
 
 app.listen(process.env.PORT, () => {
-  console.log("Server running on port 3000");
+  console.log(`Server runnong on port ${process.env.PORT}`);
 });
