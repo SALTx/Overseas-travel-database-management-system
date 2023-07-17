@@ -1,0 +1,70 @@
+/* Add this CSS code to an external CSS file and link it to your HTML document */
+
+/* Custom styles for the table */
+.table-container {
+    height: 200px;
+    overflow: auto;
+  }
+  
+  table,
+  tr,
+  td,
+  th {
+    border: 1px solid black;
+    text-align: center;
+  }
+  
+  /* Additional styles for the page layout */
+  body {
+    padding-top: 20px;
+  }
+  
+  .container-fluid {
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-top: 0;
+  }
+  
+  .btn {
+    margin-bottom: 10px;
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  .col-md-6 {
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-inline {
+    margin-right: 10px;
+  }
+  
+  .form-control {
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  #search {
+    width: 100%;
+  }
+  
+  /* Responsive styles for mobile devices */
+  @media (max-width: 767px) {
+    .table-container {
+      height: auto;
+    }
+  
+    .btn {
+      width: 100%;
+    }
+  
+    .col-md-6 {
+      margin-bottom: 10px;
+    }
+  }
+  
