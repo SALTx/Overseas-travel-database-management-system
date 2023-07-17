@@ -6,19 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Universal test</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <style>
-      .table-container {
-        height: 200px;
-        overflow: auto;
-      }
-      table,
-      tr,
-      td,
-      th {
-        border: 1px solid black;
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/universal.css" />
     <script>
       function handleTableSelection() {
         const tableSelect = document.getElementById("table-select");
@@ -87,6 +75,7 @@
     </script>
   </head>
   <body>
+    <%- include("./partials/nav.ejs") %>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
