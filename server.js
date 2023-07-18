@@ -13,7 +13,6 @@ const recordsRoutes = require("./routes/records");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
-app.use(express.static("public"));
 
 app.use("/", routes);
 app.use("/students", studentRoutes);
