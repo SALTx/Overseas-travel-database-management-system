@@ -19,28 +19,18 @@ const queryAsync = util.promisify(connection.query).bind(connection);
 
 // Students home page
 router.get("/", async (req, res) => {
-  try {
-    const query = "SELECT * FROM students";
-    const citizenshipStatusesPromise = getEnumValues(
-      connection,
-      "students",
-      "citizenshipStatus"
-    );
+  const table = "students";
+  const query = `select * from ${table}`;
 
-    const [citizenshipStatuses, result] = await Promise.all([
-      citizenshipStatusesPromise,
-      queryAsync(query),
-    ]);
+  const data = await queryAsync(query);
+  const tables = await getTablesFromDatabase();
 
-    res.status(200).render("students", {
-      title: "Students",
-      students: result,
-      citizenshipStatuses,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
+  res.render("universal", {
+    title: "Universal test",
+    table: table,
+    data: data,
+    tables: tables,
+  });
 });
 
 // Edit students page
